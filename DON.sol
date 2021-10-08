@@ -1,6 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+
+abstract contract HRNG {
+             function hrand() public view virtual returns (bytes32);
+
+        }
+
+
+
+
+
 /**
 * @notice Stakeable is a contract who is ment to be inherited by other contract that wants Staking capabilities
 */
@@ -191,15 +201,52 @@ import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 
 contract DON is ERC20, Stakeable {
     address public admin;
+    address hrngAddr = 0xFe3F307Ce91d3C9BABff9e47B29F5Dd351F054d8;
+    HRNG hrng;
     
     constructor() ERC20 ('DON Token', 'DON') {
-        admin = msg.sender;
-        _mint(msg.sender, 250000 * 10 ** 18);
+         hrng = HRNG(hrngAddr); 
+         admin = msg.sender;
+         _mint(msg.sender, 250000 * 10 ** 18);
         
     }
     
     
-        /**
+    function lastr() public view returns (uint) {
+         bytes32 r = hrng.hrand(); // step 3. call hrand to get hardware random.
+         uint256 q = uint(r);
+         return q;
+    }
+    
+    
+    function pseudoRand() private view returns(uint256) {
+    uint256 seed = uint256(keccak256(abi.encodePacked(
+        block.timestamp + block.difficulty +
+        ((uint256(keccak256(abi.encodePacked(block.coinbase)))) / (block.timestamp)) +
+        block.gaslimit + 
+        ((uint256(keccak256(abi.encodePacked(msg.sender)))) / (block.timestamp)) +
+        block.number
+    )));
+
+    return (seed - ((seed / 1000) * 1000));
+    }
+    
+    
+        function getBlockRandomBinary() private view returns (uint256) {
+         bytes32 r = hrng.hrand(); // call hrand to get hardware random.
+         uint256 s = pseudoRand();
+         uint256 number = uint(r);
+         return ((number - s) % 1);
+       
+    }
+    
+    
+    
+    
+    
+    
+    
+     /**
     * Add functionality like burn to the _stake afunction
     *
      */
