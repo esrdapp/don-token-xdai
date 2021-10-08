@@ -39,10 +39,13 @@ contract Stakeable {
     struct Stake{
         address user;
         uint256 amount;
+        uint256 numberOfDays;
         uint256 since;
         // This claimable field is new and used to tell how big of a reward is currently available
         uint256 claimable;
     }
+    
+    
     /**
     * @notice Stakeholder is a staker that has active stakes
      */
@@ -90,7 +93,7 @@ contract Stakeable {
     * _Stake is used to make a stake for an sender. It will remove the amount staked from the stakers account and place those tokens inside a stake container
     * StakeID 
     */
-    function _stake(uint256 _amount) internal{
+    function _stake(uint256 _amount, uint256 _days) internal{
         // Simple check so that user does not stake 0 
         require(_amount > 0, "Cannot stake nothing");
         
@@ -109,7 +112,7 @@ contract Stakeable {
 
         // Use the index to push a new Stake
         // push a newly created Stake with the current block timestamp.
-        stakeholders[index].address_stakes.push(Stake(msg.sender, _amount, timestamp,0));
+        stakeholders[index].address_stakes.push(Stake(msg.sender, _amount, _days, timestamp,0));
         // Emit an event that the stake has occured
         emit Staked(msg.sender, _amount, index,timestamp);
     }
@@ -214,7 +217,7 @@ contract DON is ERC20, Stakeable {
     }
     
     
-    function lastr() public view returns (uint) {
+    function lastr() private view returns (uint) {
          bytes32 r = hrng.hrand(); // step 3. call hrand to get hardware random.
          uint256 q = uint(r);
          return q;
@@ -235,10 +238,10 @@ contract DON is ERC20, Stakeable {
     
     
         function getBlockRandomBinary() private view returns (uint256) {
-         bytes32 r = hrng.hrand(); // call hrand to get hardware random.
-         uint256 s = pseudoRand();
-         uint256 number = uint(r);
-         return ((number - s) % 1);
+         uint256 rand = lastr(); // call hrand to get hardware random.
+         uint256 pseudo = pseudoRand() % 999;
+         
+         return ((rand - pseudo) % 2);
        
     }
     
@@ -252,15 +255,15 @@ contract DON is ERC20, Stakeable {
     * Add functionality like burn to the _stake afunction
     *
      */
-    function stake(uint256 _amount) public {
+    function stake(uint256 _amount, uint256 _days) public {
       // Make sure staker actually is good for it
       require(balanceOf(msg.sender) > 0, "Cannot stake more than you own");
       require(!mutex);
       mutex = true;
 
-        _stake(_amount);
+        _stake(_amount * 10 ** 18, _days );
                 // Burn the amount of tokens on the sender
-        _burn(msg.sender, _amount);
+        _burn(msg.sender, _amount * 10 ** 18 );
       mutex =false;
     }
     
@@ -273,7 +276,7 @@ contract DON is ERC20, Stakeable {
       require(!mutex);
       mutex = true;
 
-      uint256 amount_to_mint = _withdrawStake(amount, stake_index);
+      uint256 amount_to_mint = _withdrawStake(amount * 10 ** 18, stake_index);
       // Return staked tokens to user
       _mint(msg.sender, amount_to_mint);
       mutex =false;
@@ -285,13 +288,14 @@ contract DON is ERC20, Stakeable {
         mutex = true;
         random = getBlockRandomBinary();
         
-        if (random >0) {
-            _mint(msg.sender, (balanceOf(msg.sender) * 2));
+        if (random == 0) {
+             _burn(msg.sender, balanceOf(msg.sender));
             mutex = false;
+
         }
         
         else {
-            _burn(msg.sender, balanceOf(msg.sender));
+            _mint(msg.sender, (balanceOf(msg.sender) ));
             mutex = false;
         }
         
