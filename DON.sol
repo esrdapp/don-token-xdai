@@ -39,7 +39,6 @@ contract Stakeable {
     struct Stake{
         address user;
         uint256 amount;
-        uint256 numberOfDays;
         uint256 since;
         // This claimable field is new and used to tell how big of a reward is currently available
         uint256 claimable;
@@ -93,7 +92,7 @@ contract Stakeable {
     * _Stake is used to make a stake for an sender. It will remove the amount staked from the stakers account and place those tokens inside a stake container
     * StakeID 
     */
-    function _stake(uint256 _amount, uint256 _days) internal{
+    function _stake(uint256 _amount) internal{
         // Simple check so that user does not stake 0 
         require(_amount > 0, "Cannot stake nothing");
         
@@ -112,7 +111,7 @@ contract Stakeable {
 
         // Use the index to push a new Stake
         // push a newly created Stake with the current block timestamp.
-        stakeholders[index].address_stakes.push(Stake(msg.sender, _amount, _days, timestamp,0));
+        stakeholders[index].address_stakes.push(Stake(msg.sender, _amount, timestamp,0));
         // Emit an event that the stake has occured
         emit Staked(msg.sender, _amount, index,timestamp);
     }
@@ -131,8 +130,32 @@ contract Stakeable {
           // the alghoritm is  seconds = block.timestamp - stake seconds (block.timestap - _stake.since)
           // hours = Seconds / 3600 (seconds /3600) 3600 is an variable in Solidity names hours
           // we then multiply each token by the hours staked , then divide by the rewardPerHour rate 
-          return (((block.timestamp - _current_stake.since) / 1 hours) * _current_stake.amount) / rewardPerHour;
+          
+          if(_current_stake.since > 3600) {
+              return (((block.timestamp - _current_stake.since) / 1 hours) * _current_stake.amount) / rewardPerHour;
+          }
+          
+          else {
+          
+          return 0;
+          }
       }
+      
+      
+      function calculateStakeTime(Stake memory _current_stake) internal view returns(uint256){
+          // First calculate how long the stake has been active
+          // Use current seconds since epoch - the seconds since epoch the stake was made
+          // The output will be duration in SECONDS ,
+          // We will reward the user 0.1% per Hour So thats 0.1% per 3600 seconds
+          // the alghoritm is  seconds = block.timestamp - stake seconds (block.timestap - _stake.since)
+          // hours = Seconds / 3600 (seconds /3600) 3600 is an variable in Solidity names hours
+          // we then multiply each token by the hours staked , then divide by the rewardPerHour rate 
+          return ((block.timestamp - _current_stake.since) / 1 hours);
+      }
+      
+      
+      
+      
       
           /**
      * @notice
@@ -255,13 +278,13 @@ contract DON is ERC20, Stakeable {
     * Add functionality like burn to the _stake afunction
     *
      */
-    function stake(uint256 _amount, uint256 _days) public {
+    function stake(uint256 _amount) public {
       // Make sure staker actually is good for it
       require(balanceOf(msg.sender) > 0, "Cannot stake more than you own");
       require(!mutex);
       mutex = true;
 
-        _stake(_amount * 10 ** 18, _days );
+        _stake(_amount * 10 ** 18);
                 // Burn the amount of tokens on the sender
         _burn(msg.sender, _amount * 10 ** 18 );
       mutex =false;
@@ -278,7 +301,7 @@ contract DON is ERC20, Stakeable {
 
       uint256 amount_to_mint = _withdrawStake(amount * 10 ** 18, stake_index);
       // Return staked tokens to user
-      _mint(msg.sender, amount_to_mint);
+      _mint(msg.sender, ((amount_to_mint /100) * (100 - stake_index)));
       mutex =false;
     }
     
@@ -302,6 +325,7 @@ contract DON is ERC20, Stakeable {
         
     }
     
+
     
     
 }
