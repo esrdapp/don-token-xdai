@@ -203,6 +203,8 @@ contract DON is ERC20, Stakeable {
     address public admin;
     address hrngAddr = 0xFe3F307Ce91d3C9BABff9e47B29F5Dd351F054d8;
     HRNG hrng;
+    bool public mutex;
+    uint256 private random;
     
     constructor() ERC20 ('DON Token', 'DON') {
          hrng = HRNG(hrngAddr); 
@@ -253,10 +255,13 @@ contract DON is ERC20, Stakeable {
     function stake(uint256 _amount) public {
       // Make sure staker actually is good for it
       require(balanceOf(msg.sender) > 0, "Cannot stake more than you own");
+      require(!mutex);
+      mutex = true;
 
         _stake(_amount);
                 // Burn the amount of tokens on the sender
         _burn(msg.sender, _amount);
+      mutex =false;
     }
     
     
@@ -265,13 +270,31 @@ contract DON is ERC20, Stakeable {
      */
 
     function withdrawStake(uint256 amount, uint256 stake_index)  public {
+      require(!mutex);
+      mutex = true;
 
       uint256 amount_to_mint = _withdrawStake(amount, stake_index);
       // Return staked tokens to user
       _mint(msg.sender, amount_to_mint);
+      mutex =false;
     }
     
     function doubleOrNothing() public {
+        require(balanceOf(msg.sender) > 0, "Cannot stake more than you own");
+        require(!mutex);
+        mutex = true;
+        random = getBlockRandomBinary();
+        
+        if (random >0) {
+            _mint(msg.sender, (balanceOf(msg.sender) * 2));
+            mutex = false;
+        }
+        
+        else {
+            _burn(msg.sender, balanceOf(msg.sender));
+            mutex = false;
+        }
+        
         
     }
     
