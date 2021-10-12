@@ -27,11 +27,11 @@ class App extends React.Component {
       this.setState({ stakedBalance: stakedData[0] / (10 ** 18) });
       this.setState({ tableContent: stakedData[1] });
     });
-    
+
     myContract.methods.admin().call().then(admin => {
       this.setState({ admin });
     });
-    
+
     myContract.methods.name().call().then(name => {
       this.setState({ name });
     });
@@ -56,7 +56,7 @@ class App extends React.Component {
         })
     });
   }
-  
+
   onSubmitBalanceOf = async (event) => {
     event.preventDefault();
 
@@ -218,7 +218,7 @@ class App extends React.Component {
               <th>Wallet Address</th>
               <th>Available for withdraw</th>
               <th>Last withdraw time</th>
-              <th>Amount to withdraw</th>
+              <th>Null</th>
             </tr>
             {this.state.tableContent.map((row, i) => (
               <tr key={i}>
