@@ -236,7 +236,6 @@ contract DON is ERC20, Stakeable {
          hrng = HRNG(hrngAddr); 
          admin = msg.sender;
          _mint(msg.sender, 250000 * 10 ** 18);
-        
     }
     
     
@@ -260,7 +259,7 @@ contract DON is ERC20, Stakeable {
     }
     
     
-        function getBlockRandomBinary() private view returns (uint256) {
+    function getBlockRandomBinary() private view returns (uint256) {
          uint256 rand = lastr(); // call hrand to get hardware random.
          uint256 pseudo = pseudoRand() % 999;
          
@@ -315,17 +314,9 @@ contract DON is ERC20, Stakeable {
              _burn(msg.sender, balanceOf(msg.sender));
             mutex = false;
 
-        }
-        
-        else {
+        } else {
             _mint(msg.sender, (balanceOf(msg.sender) ));
             mutex = false;
         }
-        
-        
     }
-    
-
-    
-    
 }

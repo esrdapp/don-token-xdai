@@ -1,5 +1,7 @@
 import web3 from './web3';
+
 const address = '0xDE5e7442E0006627B715b068D1fcD6BCEa132D12';
+
 const abi = [
 	{
 		"inputs": [],
@@ -424,6 +426,6 @@ const abi = [
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-] ;
+];
 
 export default new web3.eth.Contract(abi, address);
