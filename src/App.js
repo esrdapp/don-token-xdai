@@ -4,7 +4,6 @@ import './App.css';
 import web3 from './web3';
 import myContract from './myContract';
 import React from "react";
-import { Form, Button, Input, Message, Header, Container } from "semantic-ui-react";
 
 class App extends React.Component {
   state = {
@@ -12,29 +11,52 @@ class App extends React.Component {
     name: '',
     stakeValue: 0,
     stakeIndex: 0,
-    withrawValue: 0,
+    withdrawValue: 0,
     account: '',
     balance: '...',
     stakedBalance: '...',
     tableContent: [],
   };
 
-  async componentDidMount() {
-    const accounts = await web3.eth.getAccounts();
-    this.setState({ account: accounts[0] });
+  showData() {
+    myContract.methods.balanceOf(this.state.account).call().then(wei => {
+      this.setState({ balance: wei / (10 ** 18) });
+    });
 
-    const wei = await myContract.methods.balanceOf(accounts[0]).call();
-    this.setState({ balance: wei / (10 ** 18) });
-
-    const stakedData = await myContract.methods.hasStake(accounts[0]).call();
-    this.setState({ stakedBalance: stakedData[0] / (10 ** 18) });
-    this.setState({ tableContent: stakedData[1] });
+    myContract.methods.hasStake(this.state.account).call().then(stakedData => {
+      this.setState({ stakedBalance: stakedData[0] / (10 ** 18) });
+      this.setState({ tableContent: stakedData[1] });
+    });
     
-    const admin = await myContract.methods.admin().call();
-    const name = await myContract.methods.name().call();
-    this.setState({ admin, name });
+    myContract.methods.admin().call().then(admin => {
+      this.setState({ admin });
+    });
+    
+    myContract.methods.name().call().then(name => {
+      this.setState({ name });
+    });
   }
 
+  async componentDidMount() {
+    window.ethereum.request({ method: "eth_requestAccounts" }).then(() => {
+      web3.eth.requestAccounts()
+        .then(accounts => {
+          web3.eth.net.getId().then(async netId => {
+            if (netId === 269) {
+              this.setState({ account: accounts[0] });
+              this.showData();
+            } else {
+              await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0x10d' }]
+              })
+              this.showData();
+            }
+          })
+        })
+    });
+  }
+  
   onSubmitBalanceOf = async (event) => {
     event.preventDefault();
 
@@ -57,6 +79,8 @@ class App extends React.Component {
         from: this.state.account,
         gasPrice: gasPrice
       });
+
+      this.showData();
     } catch (error) {
       console.log(error.message);
     }
@@ -71,28 +95,30 @@ class App extends React.Component {
         from: this.state.account,
         gasPrice: gasPrice
       });
+
+      this.showData();
+
     } catch (error) {
       console.log(error);
     }
   }
 
-  handleWithraw = async (e) => {
+  handleWithdraw = async (e) => {
     e.preventDefault();
     this.setState({ message: 'Waiting on transaction success...' });
 
     try {
       const gasPrice = await web3.eth.getGasPrice();
 
-      await myContract.methods.withdrawStake(this.state.withrawValue, this.state.stakeIndex).send({
+      await myContract.methods.withdrawStake(this.state.withdrawValue, this.state.stakeIndex).send({
         from: this.state.account,
         gasPrice: gasPrice
       });
+
+      this.showData();
     } catch (error) {
       console.log(error);
     }
-  
-    this.setState({ message: 'Withrawed successfully!' });
-    // Router.replaceRoute(`/hpb/${this.props.address}`);
   };
 
   render() {
@@ -108,7 +134,7 @@ class App extends React.Component {
         <p>
           DON Token Address
           <br />
-          <a target="_blank" href="https://hpbscan.org/HRC20/0xde5e7442e0006627b715b068d1fcd6bcea132d12">0xDE5e7442E0006627B715b068D1fcD6BCEa132D12</a>
+          <a rel="noreferrer" target="_blank" href="https://hpbscan.org/HRC20/0xde5e7442e0006627b715b068d1fcd6bcea132d12">0xDE5e7442E0006627B715b068D1fcD6BCEa132D12</a>
         </p>
 
         <p className='mt-20'>Number of DON tokens in your wallet: {this.state.balance} DON</p>
@@ -133,7 +159,7 @@ class App extends React.Component {
           </div>
         </form>
 
-        <form onSubmit={this.handleWithraw} className='mt-20'>
+        <form onSubmit={this.handleWithdraw} className='mt-20'>
           <label>Number of DON Tokens you wish to withdraw: </label><br />
           <div>
             <label className="ml-20">Stack Id: </label>
@@ -148,7 +174,7 @@ class App extends React.Component {
               type="number"
               min={0}
               value={this.state.withrawValue}
-              onChange={event => this.setState({ withrawValue: event.target.value })}
+              onChange={event => this.setState({ withdrawValue: event.target.value })}
             />
             <button className="ml-20">Withdraw</button>
           </div>
