@@ -217,10 +217,10 @@ class App extends React.Component {
           <table className="mt-20">
             <tr>
               <th>Index</th>
-              <th>Wallet Address</th>
+              <th>Wallet address</th>
               <th>Available for withdraw</th>
               <th>Last withdraw time</th>
-              <th>Null</th>
+              <th>Stake interest</th>
             </tr>
             {this.state.tableContent.map((row, i) => (
               <tr key={i}>
@@ -228,7 +228,7 @@ class App extends React.Component {
                 <td>{row[0]}</td>
                 <td>{`${row[1] / (10 ** 18)} DON`}</td>
                 <td>{row[0] ? new Date(row[2] * 1000).toLocaleString() : "Not applicable"}</td>
-                <td>{`${row[3] / (10 ** 18)} DON`}</td>
+                <td>{`${row[3] / (10 ** 19)} DON`}</td>
               </tr>
             ))
             }
