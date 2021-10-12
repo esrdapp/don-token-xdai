@@ -223,13 +223,15 @@ class App extends React.Component {
               <th>Stake interest</th>
             </tr>
             {this.state.tableContent.map((row, i) => (
-              <tr key={i}>
-                <td>{i}</td>
-                <td>{row[0]}</td>
-                <td>{`${row[1] / (10 ** 18)} DON`}</td>
-                <td>{Number(row[0]) === 0 || Number(row[2]) === 0  ? "Not Applicable" : new Date(row[2] * 1000).toLocaleString()}</td>
-                <td>{`${row[3] / (10 ** 19)} DON`}</td>
-              </tr>
+              Number(row[0]) === 0 || Number(row[2]) === 0 ? <></> : (
+                <tr key={i}>
+                  <td>{i}</td>
+                  <td>{row[0]}</td>
+                  <td>{`${row[1] / (10 ** 18)} DON`}</td>
+                  <td>{Number(row[0]) === 0 || Number(row[2]) === 0  ? "Not Applicable" : new Date(row[2] * 1000).toLocaleString()}</td>
+                  <td>{`${row[3] / (10 ** 19)} DON`}</td>
+                </tr>
+              )
             ))}
           </table>
         </div>
