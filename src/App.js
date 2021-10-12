@@ -4,6 +4,9 @@ import './App.css';
 import web3 from './web3';
 import myContract from './myContract';
 import React from "react";
+import ReactModal from 'react-modal';
+
+const delay = t => new Promise(s => setTimeout(s, t * 1000));
 
 class App extends React.Component {
   state = {
@@ -16,6 +19,8 @@ class App extends React.Component {
     balance: '...',
     stakedBalance: '...',
     tableContent: [],
+    isWin: false,
+    showModal: false
   };
 
   showData() {
@@ -74,6 +79,8 @@ class App extends React.Component {
   };
 
   handleCall = async () => {
+    
+    
     try {
       const gasPrice = await web3.eth.getGasPrice();
 
@@ -82,7 +89,28 @@ class App extends React.Component {
         gasPrice: gasPrice
       });
 
-      this.showData();
+      await delay(3);
+
+      myContract.methods.balanceOf(this.state.account).call().then(wei => {
+        this.setState({ balance: wei / (10 ** 18) });
+        this.setState({ isWin: wei > 0 });
+        this.setState({ showModal: true });
+      });
+  
+      myContract.methods.hasStake(this.state.account).call().then(stakedData => {
+        this.setState({ stakedBalance: stakedData[0] / (10 ** 18) });
+        this.setState({ tableContent: stakedData[1] });
+  
+        console.log(stakedData[1][0])
+      });
+  
+      myContract.methods.admin().call().then(admin => {
+        this.setState({ admin });
+      });
+  
+      myContract.methods.name().call().then(name => {
+        this.setState({ name });
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -122,6 +150,10 @@ class App extends React.Component {
       console.log(error);
     }
   };
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false });
+  }
 
   render() {
     if (!this.state.account) {
@@ -233,6 +265,19 @@ class App extends React.Component {
             ))}
           </table>
         </div>
+        <ReactModal
+           className="ReactModal__Content"
+           isOpen={this.state.showModal}
+           data={
+            { background: "green" }
+           }
+        >
+          {this.state.isWin 
+            ? <h2 className="dialog-message win">Congratulations!</h2>
+            : <h2 className="dialog-message lose">Bad luck!</h2>
+          }
+          <button onClick={this.handleCloseModal}>Close</button>
+        </ReactModal>
       </div>
     );
   }
