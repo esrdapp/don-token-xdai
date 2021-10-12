@@ -26,6 +26,8 @@ class App extends React.Component {
     myContract.methods.hasStake(this.state.account).call().then(stakedData => {
       this.setState({ stakedBalance: stakedData[0] / (10 ** 18) });
       this.setState({ tableContent: stakedData[1] });
+
+      console.log(stakedData[1][0])
     });
 
     myContract.methods.admin().call().then(admin => {
@@ -225,7 +227,7 @@ class App extends React.Component {
                 <td>{i}</td>
                 <td>{row[0]}</td>
                 <td>{`${row[1] / (10 ** 18)} DON`}</td>
-                <td>{new Date(row[2] * 1000).toLocaleString()}</td>
+                <td>{row[0] ? new Date(row[2] * 1000).toLocaleString() : "Not applicable"}</td>
                 <td>{`${row[3] / (10 ** 18)} DON`}</td>
               </tr>
             ))
