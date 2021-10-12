@@ -217,7 +217,6 @@ class App extends React.Component {
           <table className="mt-20">
             <tr>
               <th>Index</th>
-              <th>Wallet address</th>
               <th>Available for withdraw</th>
               <th>Last withdraw time</th>
               <th>Stake interest</th>
