@@ -158,7 +158,7 @@ class App extends React.Component {
   render() {
     if (!this.state.account) {
       return (
-        <h1>Please connect your wallet first.</h1>
+        <h1>Please connect your Metamask wallet to HPB first.</h1>
       )
     }
 
