@@ -184,7 +184,8 @@ class App extends React.Component {
         <br />
         <p className='mt-20'>DON Token Staking</p>
         <p>Earn 0.01% interest per hour (0.24% interest per day)</p>
-        <p>Withdraw whenever you like, but withdrawals from each subsequent stake index incur a 1% incremental withdrawl fee</p>
+        <p>Withdraw whenever you like, but withdrawals from each subsequent stake index incur a 1% incremental withdrawl fee. 
+        You can only ever deposit once per stake index, however you can withdraw from each stake index in full or in part</p>
         
 
         <form onSubmit={this.handleStake} className='mt-20'>
