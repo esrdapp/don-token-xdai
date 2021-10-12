@@ -226,7 +226,6 @@ class App extends React.Component {
               Number(row[0]) === 0 || Number(row[2]) === 0 ? <></> : (
                 <tr key={i}>
                   <td>{i}</td>
-                  <td>{row[0]}</td>
                   <td>{`${row[1] / (10 ** 18)} DON`}</td>
                   <td>{new Date(row[2] * 1000).toLocaleString()}</td>
                   <td>{`${row[3] / (10 ** 19)} DON`}</td>
