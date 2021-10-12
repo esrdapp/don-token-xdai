@@ -227,11 +227,10 @@ class App extends React.Component {
                 <td>{i}</td>
                 <td>{row[0]}</td>
                 <td>{`${row[1] / (10 ** 18)} DON`}</td>
-                <td>{row[2] > 0 ? new Date(row[2] * 1000).toLocaleString() : "Not Applicable"}</td>
+                <td>{row[0] != 0 && row[2] > 0  ? new Date(row[2] * 1000).toLocaleString() : "Not Applicable"}</td>
                 <td>{`${row[3] / (10 ** 19)} DON`}</td>
               </tr>
-            ))
-            }
+            ))}
           </table>
         </div>
       </div>
