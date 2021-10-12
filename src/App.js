@@ -176,9 +176,16 @@ class App extends React.Component {
 
         <p className='mt-20'>Call the DON!</p>
         <img src={call} className="" alt="call" width={280} />
-        <p className="desc">Warning: this function means Double Or Nothing! The function will call a random number 
-        from the HPB HRNG. You will either double the DON tokens in your wallet, or you will lose all of them! Only a true DON will be brave enough to call this function!</p>
+        <p className="desc">Warning: this function means Double Or Nothing!
+        <br />  The function will call a random number from the HPB HRNG. 
+        <br />  You will either double the DON tokens in your wallet, or you will lose all of them! 
+        <br /> Only a true DON will be brave enough to call this function!</p>
         <button onClick={this.handleCall} className="call-btn">Call the don</button>
+        <br />
+        <p className='mt-20'>DON Token Staking</p>
+        <p>Earn 0.01% interest per hour (0.24% interest per day)</p>
+        <p>Withdraw whenever you like, but withdrawals from each subsequent stake index incur a 1% incremental withdrawl fee</p>
+        
 
         <form onSubmit={this.handleStake} className='mt-20'>
           <label>Number of DON Tokens you wish to stake: </label><br />
