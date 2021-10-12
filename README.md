@@ -1,6 +1,9 @@
 # DON-Token
 DON Token for hpb
 
+The true DON token address is: 0x TBC
+You can verify on the HPBScan block explorer here: https://hpbscan.org/HRC20Contract/0x TBC
+
 Don token is a staking token where you can earn 0.01% interest per hour (0.24% interest per day) 
 
 You can stake your DON at https://dontoken.app
