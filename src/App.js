@@ -176,7 +176,8 @@ class App extends React.Component {
 
         <p className='mt-20'>Call the DON!</p>
         <img src={call} className="" alt="call" width={280} />
-        <p className="desc">Warning this function will call a random number from the HPB HRNG. You will either double your tokens or you will lose all of them!!</p>
+        <p className="desc">Warning: this function means Double Or Nothing! The function will call a random number 
+        from the HPB HRNG. You will either double the DON tokens in your wallet, or you will lose all of them! Only a true DON will be brave enough to call this function!</p>
         <button onClick={this.handleCall} className="call-btn">Call the don</button>
 
         <form onSubmit={this.handleStake} className='mt-20'>
@@ -196,7 +197,7 @@ class App extends React.Component {
         <form onSubmit={this.handleWithdraw} className='mt-20'>
           <label>Number of DON Tokens you wish to withdraw: </label><br />
           <div>
-            <label className="ml-20">Stack Id: </label>
+            <label className="ml-20">Stake Index: </label>
             <input
               type="number"
               min={0}
@@ -248,10 +249,10 @@ class App extends React.Component {
         <div className="flex center">
           <table className="mt-20">
             <tr>
-              <th>Index</th>
-              <th>Available for withdraw</th>
-              <th>Last withdraw time</th>
-              <th>Stake interest</th>
+              <th>Stake Index</th>
+              <th>Available to withdraw</th>
+              <th>Last Deposit/Withdraw time</th>
+              <th>Stake interest accrued</th>
             </tr>
             {this.state.tableContent.map((row, i) => (
               Number(row[0]) === 0 || Number(row[2]) === 0 ? <></> : (
