@@ -226,7 +226,7 @@ class App extends React.Component {
                 <td>{row[0]}</td>
                 <td>{`${row[1] / (10 ** 18)} DON`}</td>
                 <td>{new Date(row[2] * 1000).toLocaleString()}</td>
-                <td>{`${row[3]} DON`}</td>
+                <td>{`${row[3] / (10 ** 18)} DON`}</td>
               </tr>
             ))
             }
