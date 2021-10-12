@@ -175,7 +175,7 @@ class App extends React.Component {
             <input
               type="number"
               min={0}
-              value={this.state.withrawValue}
+              value={this.state.withdrawValue}
               onChange={event => this.setState({ withdrawValue: event.target.value })}
             />
             <button className="ml-20">Withdraw</button>
