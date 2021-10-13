@@ -166,6 +166,7 @@ class App extends React.Component {
       <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
+          Earn 87.6% interest per year, staking with the DON!</p>
           DON Token Address
           <br />
           <a rel="noreferrer" target="_blank" href="https://hpbscan.org/HRC20/0xde5e7442e0006627b715b068d1fcd6bcea132d12">0xDE5e7442E0006627B715b068D1fcD6BCEa132D12</a>
@@ -183,8 +184,8 @@ class App extends React.Component {
         <button onClick={this.handleCall} className="call-btn">Call the don</button>
         <br />
         <p className='mt-20'>DON Token Staking</p>
-        <p>Earn 0.01% interest per hour (0.24% interest per day)</p>
-        <p>Withdraw whenever you like, but withdrawals from each subsequent stake index incur a 1% incremental withdrawl fee. 
+        <p>Earn 0.01% interest for every hour staked (0.24% interest per day | 1.68% interest per week | 87.6% per year)</p>
+        <p>You can withdraw whenever you like, but withdrawals from each subsequent stake index incur a 1% incremental withdrawl fee. 
         You can only ever deposit once per stake index, however you can withdraw from each stake index in full or in part</p>
         
 
