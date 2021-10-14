@@ -204,7 +204,7 @@ class App extends React.Component {
         </form>
 
         <form onSubmit={this.handleWithdraw} className='mt-20'>
-          <label>Number of DON Tokens you wish to withdraw: </label><br />
+          <label>Number of DON Tokens you wish to withdraw (excluding stake interest which will be added automatically): </label><br />
           <div>
             <label className="ml-20">Stake Index: </label>
             <input
