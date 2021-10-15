@@ -182,7 +182,7 @@ class App extends React.Component {
           Earn 87.6% interest per year, staking with the DON!</p>
           DON Token Address
           <br />
-          <a rel="noreferrer" target="_blank" href="https://hpbscan.org/HRC20/0xde5e7442e0006627b715b068d1fcd6bcea132d12">0xDE5e7442E0006627B715b068D1fcD6BCEa132D12</a>
+          <a rel="noreferrer" target="_blank" href="https://hpbscan.org/HRC20/0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B">0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B</a>
 
         <p className='mt-20'>Number of DON tokens in your wallet: {this.state.balance} DON</p>
         <p>Number of DON tokens you have staked: {this.state.stakedBalance} DON</p>
@@ -292,12 +292,12 @@ class App extends React.Component {
         
         <p className='mt-20'>Use HPDex to swap DON tokens</p>
         <p>Please ensure that you use only the offical DON token address:</p>
-        <p>0xa7be5e053cb523585a63f8f78b7dbca68647442f</p>
+        <p>0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B</p>
         
         
           <Iframe
             title="DON"
-            src="https://app.hpdex.org/#/swap?use=v2?outputCurrency=0xa7be5e053cb523585a63f8f78b7dbca68647442f"
+            src="https://app.hpdex.org/#/swap?use=v2?outputCurrency=0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B"
             height="660px"
             width="100%"
             style={divStyle}
