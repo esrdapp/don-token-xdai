@@ -1,8 +1,9 @@
 import web3 from './web3';
 
-const address = '0xDE5e7442E0006627B715b068D1fcD6BCEa132D12';
+const address = '0x27F24e2E3B403f7847Be73Ef5e72B75B037b4089';
 
-const abi = [
+const abi = 
+     [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
@@ -292,6 +293,13 @@ const abi = [
 	},
 	{
 		"inputs": [],
+		"name": "lastr",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "mutex",
 		"outputs": [
 			{
@@ -426,6 +434,7 @@ const abi = [
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-];
+] 
+      ;
 
 export default new web3.eth.Contract(abi, address);
