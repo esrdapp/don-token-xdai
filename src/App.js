@@ -158,8 +158,10 @@ class App extends React.Component {
   render() {
     if (!this.state.account) {
       return (
+        <div>
         <h1>Please connect your Metamask wallet to HPB first.</h1>
         <img src={logo} className="App-logo" alt="logo" />
+        </div>
       )
     }
 
