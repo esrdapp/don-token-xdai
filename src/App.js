@@ -173,7 +173,6 @@ class App extends React.Component {
           DON Token Address
           <br />
           <a rel="noreferrer" target="_blank" href="https://hpbscan.org/HRC20/0xde5e7442e0006627b715b068d1fcd6bcea132d12">0xDE5e7442E0006627B715b068D1fcD6BCEa132D12</a>
-        </p>
 
         <p className='mt-20'>Number of DON tokens in your wallet: {this.state.balance} DON</p>
         <p>Number of DON tokens you have staked: {this.state.stakedBalance} DON</p>
