@@ -294,7 +294,7 @@ class App extends React.Component {
             src="https://app.hpdex.org/#/swap?use=v1?outputCurrency=0xa7be5e053cb523585a63f8f78b7dbca68647442f"
             height="660px"
             width="100%"
-            <div style={divStyle}>
+            style={divStyle}
             id="myId"
             />
       </div>
