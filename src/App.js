@@ -297,7 +297,7 @@ class App extends React.Component {
         
           <Iframe
             title="DON"
-            src="https://app.hpdex.org/#/swap?use=v2?outputCurrency=0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B"
+            src="https://app.hpdex.org/#/swap?outputCurrency=0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B"
             height="660px"
             width="100%"
             style={divStyle}
