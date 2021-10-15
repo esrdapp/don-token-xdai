@@ -289,6 +289,12 @@ class App extends React.Component {
         </div>
         <br />
         <div>
+        
+        <p className='mt-20'>Use HPDex to swap DON tokens</p>
+        <p>Please ensure that you use only the offical DON token address:</p>
+        <p>0xa7be5e053cb523585a63f8f78b7dbca68647442f</p>
+        
+        
           <Iframe
             title="DON"
             src="https://app.hpdex.org/#/swap?use=v2?outputCurrency=0xa7be5e053cb523585a63f8f78b7dbca68647442f"
