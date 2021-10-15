@@ -9,6 +9,15 @@ import Iframe from 'react-iframe';
 
 const delay = t => new Promise(s => setTimeout(s, t * 1000));
 
+const divStyle = {
+              border: '0',
+            margin: '0 auto',
+            display: 'block',
+            border-radius: '10px',
+            max-width: '600px',
+            min-width: '300px'
+};
+
 class App extends React.Component {
   state = {
     admin: '',
@@ -285,14 +294,7 @@ class App extends React.Component {
             src="https://app.hpdex.org/#/swap?use=v1?outputCurrency=0xa7be5e053cb523585a63f8f78b7dbca68647442f"
             height="660px"
             width="100%"
-            style="
-            border: 0;
-            margin: 0 auto;
-            display: block;
-            border-radius: 10px;
-            max-width: 600px;
-            min-width: 300px;
-            "
+            <div style={divStyle}>
             id="myId"
             />
       </div>
