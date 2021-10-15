@@ -5,6 +5,7 @@ import web3 from './web3';
 import myContract from './myContract';
 import React from "react";
 import ReactModal from 'react-modal';
+import Iframe from 'react-iframe';
 
 const delay = t => new Promise(s => setTimeout(s, t * 1000));
 
