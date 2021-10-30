@@ -299,7 +299,7 @@ class App extends React.Component {
         
           <Iframe
             title="DON"
-            src="https://app.sushi.com/#/swap?outputCurrency=0xEd8262aAE24b6093d08A01DbBD28027df3fDd778"
+            src="https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xEd8262aAE24b6093d08A01DbBD28027df3fDd778"
             height="660px"
             width="100%"
             style={divStyle}
