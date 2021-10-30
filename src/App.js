@@ -59,13 +59,13 @@ class App extends React.Component {
       web3.eth.requestAccounts()
         .then(accounts => {
           web3.eth.net.getId().then(async netId => {
-            if (netId === 269) {
+            if (netId === 100) {
               this.setState({ account: accounts[0] });
               this.showData();
             } else {
               await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x10d' }]
+                params: [{ chainId: '0x64' }]
               })
               this.showData();
             }
@@ -169,7 +169,7 @@ class App extends React.Component {
     if (!this.state.account) {
       return (
         <div>
-        <h1>Please connect your Metamask wallet to HPB first.</h1>
+        <h1>Please connect your Metamask wallet to xDai first.</h1>
         <img src={logo} className="App-logo" alt="logo" />
         </div>
       )
@@ -182,7 +182,7 @@ class App extends React.Component {
           Earn 87.6% interest per year, staking with the DON!</p>
           DON Token Address
           <br />
-          <a rel="noreferrer" target="_blank" href="https://hpbscan.org/HRC20/0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B">0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B</a>
+          <a rel="noreferrer" target="_blank" href="https://blockscout.com/xdai/mainnet/address/0xEd8262aAE24b6093d08A01DbBD28027df3fDd778">0xEd8262aAE24b6093d08A01DbBD28027df3fDd778</a>
 
         <p className='mt-20'>Number of DON tokens in your wallet: {this.state.balance} DON</p>
         <p>Number of DON tokens you have staked: {this.state.stakedBalance} DON</p>
@@ -190,7 +190,7 @@ class App extends React.Component {
         <p className='mt-20'>Call the DON!</p>
         <img src={call} className="" alt="call" width={280} />
         <p className="desc">Warning: this function means Double Or Nothing!
-        <br />  The function will call a random number from the HPB HRNG. 
+        <br />  The function will call a random number from the xDai RANDAO Proxy. 
         <br />  You will either double the DON tokens in your wallet, or you will lose all of them! 
         <br /> Only a true DON will be brave enough to call this function!</p>
         <button onClick={this.handleCall} className="call-btn">Call the don</button>
@@ -292,14 +292,14 @@ class App extends React.Component {
         <br />
         <div>
         
-        <p className='mt-20'>Use HPDex to swap DON tokens</p>
+        <p className='mt-20'>Use Sushiswap to swap DON tokens</p>
         <p>Please ensure that you use only the offical DON token address:</p>
-        <p>0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B</p>
+        <p>0xEd8262aAE24b6093d08A01DbBD28027df3fDd778</p>
         
         
           <Iframe
             title="DON"
-            src="https://app.hpdex.org/#/swap?outputCurrency=0xef8432fD5D8b6B33a9915cD6Ad22fe9B6718Db9B"
+            src="https://app.sushi.com/#/swap?outputCurrency=0xEd8262aAE24b6093d08A01DbBD28027df3fDd778"
             height="660px"
             width="100%"
             style={divStyle}
