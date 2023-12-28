@@ -59,7 +59,7 @@ class App extends React.Component {
       web3.eth.requestAccounts()
         .then(accounts => {
           web3.eth.net.getId().then(async netId => {
-            if (netId === 100) {
+            if (netId === 369) {
               this.setState({ account: accounts[0] });
               this.showData();
             } else {
