@@ -65,7 +65,7 @@ class App extends React.Component {
             } else {
               await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x369' }]
+                params: [{ chainId: '0x171' }]
               })
               this.showData();
             }
