@@ -65,7 +65,7 @@ class App extends React.Component {
             } else {
               await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x64' }]
+                params: [{ chainId: '0x369' }]
               })
               this.showData();
             }
@@ -169,7 +169,7 @@ class App extends React.Component {
     if (!this.state.account) {
       return (
         <div>
-        <h1>Please connect your Metamask wallet to xDai first.</h1>
+        <h1>Please connect your Metamask wallet to Pulsechain first.</h1>
         <img src={logo} className="App-logo" alt="logo" />
         </div>
       )
@@ -292,7 +292,7 @@ class App extends React.Component {
         <br />
         <div>
         
-        <p className='mt-20'>Use Sushiswap to swap DON tokens</p>
+        <p className='mt-20'>Use PulseX to swap DON tokens</p>
         <p>Please ensure that you use only the offical DON token address:</p>
         <p>0xEd8262aAE24b6093d08A01DbBD28027df3fDd778</p>
         
