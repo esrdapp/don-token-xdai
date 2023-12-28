@@ -182,7 +182,7 @@ class App extends React.Component {
           Earn 87.6% interest per year, staking with the DON!</p>
           DON Token Address
           <br />
-          <a rel="noreferrer" target="_blank" href="https://blockscout.com/xdai/mainnet/address/0xEd8262aAE24b6093d08A01DbBD28027df3fDd778">0xEd8262aAE24b6093d08A01DbBD28027df3fDd778</a>
+          <a rel="noreferrer" target="_blank" href="https://otter.pulsechain.com/address/0x3709bb762148c2ad9441Ffd2b74e2C0ba1a7B370">0x3709bb762148c2ad9441Ffd2b74e2C0ba1a7B370</a>
 
         <p className='mt-20'>Number of DON tokens in your wallet: {this.state.balance} DON</p>
         <p>Number of DON tokens you have staked: {this.state.stakedBalance} DON</p>
@@ -190,9 +190,9 @@ class App extends React.Component {
         <p className='mt-20'>Call the DON!</p>
         <img src={call} className="" alt="call" width={280} />
         <p className="desc">Warning: this function means Double Or Nothing!
-        <br />  The function will call a random number from the xDai RANDAO Proxy. 
+        <br />  The function will call a random number from the Pulsechain Random Pseudo Proxy. 
         <br />  You will either double the DON tokens in your wallet, or you will lose all of them! 
-        <br /> Only a true DON will be brave enough to call this function!</p>
+        <br /> Only a true DON will ever be brave enough to call this function!</p>
         <button onClick={this.handleCall} className="call-btn">Call the don</button>
         <br />
         <p className='mt-20'>DON Token Staking</p>
@@ -200,7 +200,7 @@ class App extends React.Component {
                
 
         <form onSubmit={this.handleStake} className='mt-20'>
-          <label>Number of DON Tokens you wish to stake: </label><br />
+          <label>Number of Pulsechain DON Tokens you wish to stake: </label><br />
           <div>
             <label className="ml-20">Amount: </label>
             <input
@@ -218,7 +218,7 @@ class App extends React.Component {
         You can only ever deposit once per stake index, however you can withdraw from each stake index in full or in part</p>
 
         <form onSubmit={this.handleWithdraw} className='mt-20'>
-          <label>Number of DON Tokens you wish to withdraw (excluding stake interest which will be added automatically): </label><br />
+          <label>Number of Pulsechain DON Tokens you wish to withdraw (excluding stake interest which will be added automatically): </label><br />
           <div>
             <label className="ml-20">Stake Index: </label>
             <input
@@ -293,13 +293,13 @@ class App extends React.Component {
         <div>
         
         <p className='mt-20'>Use PulseX to swap DON tokens</p>
-        <p>Please ensure that you use only the offical DON token address:</p>
-        <p>0xEd8262aAE24b6093d08A01DbBD28027df3fDd778</p>
+        <p>Please ensure that you use only the offical Pulsechain DON token address:</p>
+        <p>0x3709bb762148c2ad9441Ffd2b74e2C0ba1a7B370</p>
         
         
           <Iframe
             title="DON"
-            src="https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xEd8262aAE24b6093d08A01DbBD28027df3fDd778"
+            src="https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x3709bb762148c2ad9441Ffd2b74e2C0ba1a7B370"
             height="660px"
             width="100%"
             style={divStyle}
