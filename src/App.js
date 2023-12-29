@@ -1,62 +1,127 @@
-import logo from './logo.png';
-import call from './call.png';
-import './App.css';
-import web3 from './web3';
-import myContract from './myContract';
-import React from "react";
-import ReactModal from 'react-modal';
-import Iframe from 'react-iframe';
+// import logo from './logo.png';
+// import call from './call.png';
+// import './App.css';
+// import web3 from './web3';
+// import myContract from './myContract';
+// import React from "react";
+// import ReactModal from 'react-modal';
+// import Iframe from 'react-iframe';
 
-const delay = t => new Promise(s => setTimeout(s, t * 1000));
+// const delay = t => new Promise(s => setTimeout(s, t * 1000));
 
-const divStyle = {
-              'border': '0',
-            'margin': '0 auto',
-            'display': 'block',
-            'border-radius': '10px',
-            'max-width': '600px',
-            'min-width': '300px'
-};
+// const divStyle = {
+//               'border': '0',
+//             'margin': '0 auto',
+//             'display': 'block',
+//             'border-radius': '10px',
+//             'max-width': '600px',
+//             'min-width': '300px'
+// };
 
-class App extends React.Component {
-  state = {
-    admin: '',
-    name: '',
-    stakeValue: 0,
-    stakeIndex: 0,
-    withdrawValue: 0,
-    account: '',
-    balance: '...',
-    stakedBalance: '...',
-    tableContent: [],
-    isWin: false,
-    showModal: false
-  };
+// // class App extends React.Component {
+// //   state = {
+// //     admin: '',
+// //     name: '',
+// //     stakeValue: 0,
+// //     stakeIndex: 0,
+// //     withdrawValue: 0,
+// //     account: '',
+// //     balance: '...',
+// //     stakedBalance: '...',
+// //     tableContent: [],
+// //     isWin: false,
+// //     showModal: false
+// //   };
 
-      // Bind the connectWallet function to the current instance
-    this.connectWallet = this.connectWallet.bind(this);
-  }
+// //       // Bind the connectWallet function to the current instance
+// //     this.connectWallet = this.connectWallet.bind(this);
+// //   }
 
-  showData() {
-    myContract.methods.balanceOf(this.state.account).call().then(wei => {
-      this.setState({ balance: wei / (10 ** 18) });
-    });
+// //   showData() {
+// //     myContract.methods.balanceOf(this.state.account).call().then(wei => {
+// //       this.setState({ balance: wei / (10 ** 18) });
+// //     });
 
-    myContract.methods.hasStake(this.state.account).call().then(stakedData => {
-      this.setState({ stakedBalance: stakedData[0] / (10 ** 18) });
-      this.setState({ tableContent: stakedData[1] });
+// //     myContract.methods.hasStake(this.state.account).call().then(stakedData => {
+// //       this.setState({ stakedBalance: stakedData[0] / (10 ** 18) });
+// //       this.setState({ tableContent: stakedData[1] });
 
-      console.log(stakedData[1][0])
-    });
+// //       console.log(stakedData[1][0])
+// //     });
 
-    myContract.methods.admin().call().then(admin => {
-      this.setState({ admin });
-    });
+// //     myContract.methods.admin().call().then(admin => {
+// //       this.setState({ admin });
+// //     });
 
-    myContract.methods.name().call().then(name => {
-      this.setState({ name });
-    });
-  }
+// //     myContract.methods.name().call().then(name => {
+// //       this.setState({ name });
+// //     });
+// //   }
+
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       admin: '',
+//       name: '',
+//       stakeValue: 0,
+//       stakeIndex: 0,
+//       withdrawValue: 0,
+//       account: '',
+//       balance: '...',
+//       stakedBalance: '...',
+//       tableContent: [],
+//       isWin: false,
+//       showModal: false
+//     };
+    
+//     // Bind the connectWallet function to the current instance
+//     this.connectWallet = this.connectWallet.bind(this);
+//   }
+
+//   // Rest of your component code...
+
+//   async connectWallet() {
+//      try {
+//        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+//        const netId = await web3.eth.net.getId();
+//        if (netId === 369) {
+//          this.setState({ account: accounts[0] });
+//          this.showData();
+//        } else {
+//          await window.ethereum.request({
+//            method: 'wallet_switchEthereumChain',
+//            params: [{ chainId: '0x171' }]
+//          });
+//          this.showData();
+//        }
+//      } catch (error) {
+//        console.error("Error connecting wallet:", error);
+//      }
+//    }
+//   }
+
+//   showData() {
+//     myContract.methods.balanceOf(this.state.account).call().then(wei => {
+//       this.setState({ balance: wei / (10 ** 18) });
+//     });
+
+//     myContract.methods.hasStake(this.state.account).call().then(stakedData => {
+//       this.setState({ stakedBalance: stakedData[0] / (10 ** 18) });
+//       this.setState({ tableContent: stakedData[1] });
+
+//       console.log(stakedData[1][0]);
+//     });
+
+//     myContract.methods.admin().call().then(admin => {
+//       this.setState({ admin });
+//     });
+
+//     myContract.methods.name().call().then(name => {
+//       this.setState({ name });
+//     });
+//   }
+// }
 
   // async componentDidMount() {
   //   window.ethereum.request({ method: "eth_requestAccounts" }).then(() => {
@@ -97,25 +162,94 @@ class App extends React.Component {
   //   }
   // }
 
-  async connectWallet() {
-    try {
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-      const netId = await web3.eth.net.getId();
-      if (netId === 369) {
-        this.setState({ account: accounts[0] }, () => {
-          this.showData(); // This is called after the state is updated
-        });
-      } else {
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x171' }]
-        });
-        this.showData();
-      }
-    } catch (error) {
-      console.error("Error connecting wallet:", error);
-    }
+  // async connectWallet() {
+  //   try {
+  //     const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+  //     const netId = await web3.eth.net.getId();
+  //     if (netId === 369) {
+  //       this.setState({ account: accounts[0] }, () => {
+  //         this.showData(); // This is called after the state is updated
+  //       });
+  //     } else {
+  //       await window.ethereum.request({
+  //         method: 'wallet_switchEthereumChain',
+  //         params: [{ chainId: '0x171' }]
+  //       });
+  //       this.showData();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error connecting wallet:", error);
+  //   }
+  // }
+
+import logo from './logo.png';
+import call from './call.png';
+import './App.css';
+import web3 from './web3';
+import myContract from './myContract';
+import React from "react";
+import ReactModal from 'react-modal';
+import Iframe from 'react-iframe';
+
+const delay = t => new Promise(s => setTimeout(s, t * 1000));
+
+const divStyle = {
+  'border': '0',
+  'margin': '0 auto',
+  'display': 'block',
+  'border-radius': '10px',
+  'max-width': '600px',
+  'min-width': '300px'
+};
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      admin: '',
+      name: '',
+      stakeValue: 0,
+      stakeIndex: 0,
+      withdrawValue: 0,
+      account: '',
+      balance: '...',
+      stakedBalance: '...',
+      tableContent: [],
+      isWin: false,
+      showModal: false
+    };
+    
+    // Bind the connectWallet function to the current instance
+    this.connectWallet = this.connectWallet.bind(this);
   }
+
+  async connectWallet() {
+     try {
+       const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+       const netId = await web3.eth.net.getId();
+       if (netId === 369) {
+         this.setState({ account: accounts[0] });
+         this.showData();
+       } else {
+         await window.ethereum.request({
+           method: 'wallet_switchEthereumChain',
+           params: [{ chainId: '0x171' }]
+         });
+         this.showData();
+       }
+     } catch (error) {
+       console.error("Error connecting wallet:", error);
+     }
+   }
+
+
+
+
+
+
+
+
+
 
   onSubmitBalanceOf = async (event) => {
     event.preventDefault();
