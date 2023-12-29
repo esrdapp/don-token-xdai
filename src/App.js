@@ -33,6 +33,8 @@ class App extends React.Component {
     showModal: false
   };
 
+  this.connectWallet = this.connectWallet.bind(this);
+
   showData() {
     myContract.methods.balanceOf(this.state.account).call().then(wei => {
       this.setState({ balance: wei / (10 ** 18) });
@@ -94,24 +96,24 @@ class App extends React.Component {
   // }
 
   async connectWallet() {
-  try {
-    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-    const netId = await web3.eth.net.getId();
-    if (netId === 369) {
-      this.setState({ account: accounts[0] }, () => {
-        this.showData(); // This is called after the state is updated
-      });
-    } else {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x171' }]
-      });
-      this.showData();
+    try {
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      const netId = await web3.eth.net.getId();
+      if (netId === 369) {
+        this.setState({ account: accounts[0] }, () => {
+          this.showData(); // This is called after the state is updated
+        });
+      } else {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x171' }]
+        });
+        this.showData();
+      }
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
     }
-  } catch (error) {
-    console.error("Error connecting wallet:", error);
   }
-}
 
   onSubmitBalanceOf = async (event) => {
     event.preventDefault();
