@@ -54,24 +54,47 @@ class App extends React.Component {
     });
   }
 
-  async componentDidMount() {
-    window.ethereum.request({ method: "eth_requestAccounts" }).then(() => {
-      web3.eth.requestAccounts()
-        .then(accounts => {
-          web3.eth.net.getId().then(async netId => {
-            if (netId === 369) {
-              this.setState({ account: accounts[0] });
-              this.showData();
-            } else {
-              await window.ethereum.request({
-                method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x171' }]
-              })
-              this.showData();
-            }
-          })
-        })
-    });
+  // async componentDidMount() {
+  //   window.ethereum.request({ method: "eth_requestAccounts" }).then(() => {
+  //     web3.eth.requestAccounts()
+  //       .then(accounts => {
+  //         web3.eth.net.getId().then(async netId => {
+  //           if (netId === 369) {
+  //             this.setState({ account: accounts[0] });
+  //             this.showData();
+  //           } else {
+  //             await window.ethereum.request({
+  //               method: 'wallet_switchEthereumChain',
+  //               params: [{ chainId: '0x171' }]
+  //             })
+  //             this.showData();
+  //           }
+  //         })
+  //       })
+  //   });
+  // }
+
+    async componentDidMount() {
+    await this.connectWallet();
+  }
+
+  async connectWallet() {
+    try {
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      const netId = await web3.eth.net.getId();
+      if (netId === 369) {
+        this.setState({ account: accounts[0] });
+        this.showData();
+      } else {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x171' }]
+        });
+        this.showData();
+      }
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+    }
   }
 
   onSubmitBalanceOf = async (event) => {
