@@ -223,6 +223,14 @@ class App extends React.Component {
     this.connectWallet = this.connectWallet.bind(this);
   }
 
+async componentDidMount() {
+  // Check if Metamask is installed and connected
+  if (typeof window.ethereum !== 'undefined' && window.ethereum.isConnected()) {
+    await this.connectWallet();
+  }
+}
+
+    
   async connectWallet() {
      try {
        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
