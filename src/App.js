@@ -206,7 +206,7 @@ class App extends React.Component {
         <br />  The function will call a random number from the Pulsechain Random Pseudo Proxy. 
         <br />  You will either double the DON tokens in your wallet, or you will lose all of them! 
         <br /> Only a true DON will ever be brave enough to call this function!</p>
-        <button onClick={this.handleCall} className="call-btn">Call the don</button>
+        <button onClick={this.connectWallet}>Connect Wallet</button>
         <br />
         <p className='mt-20'>DON Token Staking</p>
         <p>Earn 0.01% interest for every hour staked (0.24% interest per day | 1.68% interest per week | 87.6% per year)</p>
