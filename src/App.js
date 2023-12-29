@@ -49,12 +49,17 @@ function App() {
     }
   }
 
-  useEffect(() => {
     // Check if Metamask is installed and connected
-    if (typeof window.ethereum !== 'undefined' && window.ethereum.isConnected()) {
-      handleConnectWallet();
-    }
-  }, []);
+  if (typeof window.ethereum !== 'undefined' && window.ethereum.isConnected()) {
+    handleConnectWallet();
+  }
+
+  // useEffect(() => {
+  //   // Check if Metamask is installed and connected
+  //   if (typeof window.ethereum !== 'undefined' && window.ethereum.isConnected()) {
+  //     handleConnectWallet();
+  //   }
+  // }, []);
 
   async function showData() {
     try {
