@@ -182,7 +182,7 @@ class App extends React.Component {
           Earn 87.6% interest per year, staking with the DON!</p>
           DON Token Address
           <br />
-          <a rel="noreferrer" target="_blank" href="https://otter.pulsechain.com/address/0x3709bb762148c2ad9441Ffd2b74e2C0ba1a7B370">0x3709bb762148c2ad9441Ffd2b74e2C0ba1a7B370</a>
+          <a rel="noreferrer" target="_blank" href="https://otter.pulsechain.com/address/0xbeAF9572154D99177198bC328eeacA64c5ca275F">0xbeAF9572154D99177198bC328eeacA64c5ca275F</a>
 
         <p className='mt-20'>Number of DON tokens in your wallet: {this.state.balance} DON</p>
         <p>Number of DON tokens you have staked: {this.state.stakedBalance} DON</p>
@@ -294,12 +294,12 @@ class App extends React.Component {
         
         <p className='mt-20'>Use PulseX to swap DON tokens</p>
         <p>Please ensure that you use only the offical Pulsechain DON token address:</p>
-        <p>0x3709bb762148c2ad9441Ffd2b74e2C0ba1a7B370</p>
+        <p>0xbeAF9572154D99177198bC328eeacA64c5ca275F</p>
         
         
           <Iframe
             title="DON"
-            src="https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x3709bb762148c2ad9441Ffd2b74e2C0ba1a7B370"
+            src="https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xbeAF9572154D99177198bC328eeacA64c5ca275F"
             height="660px"
             width="100%"
             style={divStyle}
