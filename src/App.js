@@ -74,10 +74,6 @@ class App extends React.Component {
   //   });
   // }
 
-    async componentDidMount() {
-    await this.connectWallet();
-  }
-
   async connectWallet() {
     try {
       const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
