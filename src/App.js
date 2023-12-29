@@ -166,18 +166,31 @@ class App extends React.Component {
   }
 
   render() {
-    if (!this.state.account) {
-      return (
-        <div>
-        <h1>Please connect your Metamask wallet to Pulsechain first.</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-        </div>
-      )
-    }
+    // if (!this.state.account) {
+    //   return (
+    //     <div>
+    //     <h1>Please connect your Metamask wallet to Pulsechain first.</h1>
+    //     <img src={logo} className="App-logo" alt="logo" />
+    //     </div>
+    //   )
+    // }
+
+    
 
     return (
       <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
+
+        {!this.state.account ? (
+        <div>
+          <h1>Please connect your Metamask wallet to Pulsechain first.</h1>
+          <button onClick={this.connectWallet}>Connect Wallet</button>
+        </div>
+        ) : (
+        <>
+
+
+      
         <p>
           Earn 87.6% interest per year, staking with the DON!</p>
           DON Token Address
@@ -324,6 +337,9 @@ class App extends React.Component {
           }
           <button onClick={this.handleCloseModal}>Close</button>
         </ReactModal>
+
+              </>
+      )}
       </div>
     );
   }
