@@ -29,6 +29,7 @@ function App() {
   const [tableContent, setTableContent] = useState([]);
   const [isWin, setIsWin] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function handleConnectWallet() {
     try {
@@ -36,30 +37,27 @@ function App() {
       const netId = await web3.eth.net.getId();
       if (netId === 369) {
         setAccount(accounts[0]);
-        showData();
+        await showData();
       } else {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0x171' }]
         });
-        showData();
+        await showData();
       }
     } catch (error) {
       console.error("Error connecting wallet:", error);
+    } finally {
+      setIsLoading(false); // Set loading state to false once data fetching is done
     }
   }
 
+  useEffect(() => {
     // Check if Metamask is installed and connected
-  if (typeof window.ethereum !== 'undefined' && window.ethereum.isConnected()) {
-    handleConnectWallet();
-  }
-
-  // useEffect(() => {
-  //   // Check if Metamask is installed and connected
-  //   if (typeof window.ethereum !== 'undefined' && window.ethereum.isConnected()) {
-  //     handleConnectWallet();
-  //   }
-  // }, []);
+    if (typeof window.ethereum !== 'undefined' && window.ethereum.isConnected()) {
+      handleConnectWallet();
+    }
+  }, []);
 
   async function showData() {
     try {
@@ -133,15 +131,12 @@ function App() {
 
   return (
     <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
-
-      {!account ? (
-        <div>
-          <h1>Please connect your Metamask wallet to Pulsechain first.</h1>
-          <button onClick={handleConnectWallet}>Connect Wallet</button>
-        </div>
-      ) : (
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : account ? (
         <>
+          <img src={logo} className="App-logo" alt="logo" />
+
           <p>Earn 87.6% interest per year, staking with the DON!</p>
           <p>DON Token Address</p>
           <a rel="noreferrer" target="_blank" href="https://otter.pulsechain.com/address/0xbeAF9572154D99177198bC328eeacA64c5ca275F">0xbeAF9572154D99177198bC328eeacA64c5ca275F</a>
@@ -155,6 +150,8 @@ function App() {
             <br />The function will call a random number from the Pulsechain Random Pseudo Proxy.
             <br />You will either double the DON tokens in your wallet, or you will lose all of them!
             <br />Only a true DON will ever be brave enough to call this function!</p>
+
+          <button onClick={handleConnectWallet}>Connect Wallet</button>
 
           <p className='mt-20'>DON Token Staking</p>
           <p>Earn 0.01% interest for every hour staked (0.24% interest per day | 1.68% interest per week | 87.6% per year)</p>
@@ -175,7 +172,7 @@ function App() {
 
           <br />
           <p>You can withdraw whenever you like, but withdrawals from each subsequent stake index incur a 1% incremental withdrawal fee.
-            You can only ever deposit once per stake index, however you can withdraw from each stake index in full or in part</p>
+          You can only ever deposit once per stake index, however you can withdraw from each stake index in full or in part</p>
 
           <form onSubmit={handleWithdraw} className='mt-20'>
             <label>Number of Pulsechain DON Tokens you wish to withdraw (excluding stake interest which will be added automatically): </label><br />
@@ -245,6 +242,11 @@ function App() {
             <button onClick={handleCloseModal}>Close</button>
           </ReactModal>
         </>
+      ) : (
+        <div>
+          <h1>Please connect your Metamask wallet to Pulsechain first.</h1>
+          <button onClick={handleConnectWallet}>Connect Wallet</button>
+        </div>
       )}
     </div>
   );
