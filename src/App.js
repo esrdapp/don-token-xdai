@@ -30,31 +30,31 @@ function App() {
   const [isWin, setIsWin] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    async function connectWallet() {
-      try {
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const netId = await web3.eth.net.getId();
-        if (netId === 369) {
-          setAccount(accounts[0]);
-          showData();
-        } else {
-          await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0x171' }]
-          });
-          showData();
-        }
-      } catch (error) {
-        console.error("Error connecting wallet:", error);
+useEffect(() => {
+  async function handleConnectWallet() { // Change the function name here
+    try {
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      const netId = await web3.eth.net.getId();
+      if (netId === 369) {
+        setAccount(accounts[0]);
+        showData();
+      } else {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x171' }]
+        });
+        showData();
       }
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
     }
+  }
 
-    // Check if Metamask is installed and connected
-    if (typeof window.ethereum !== 'undefined' && window.ethereum.isConnected()) {
-      connectWallet();
-    }
-  }, []);
+  // Check if Metamask is installed and connected
+  if (typeof window.ethereum !== 'undefined' && window.ethereum.isConnected()) {
+    handleConnectWallet(); // Change the function call here
+  }
+}, []);
 
   async function showData() {
     try {
@@ -134,7 +134,7 @@ function App() {
     {!account ? (
       <div>
         <h1>Please connect your Metamask wallet to Pulsechain first.</h1>
-        <button onClick={connectWallet}>Connect Wallet</button>
+        <button onClick={handleConnectWallet}>Connect Wallet</button>
       </div>
     ) : (
       <>
@@ -151,8 +151,6 @@ function App() {
           <br />The function will call a random number from the Pulsechain Random Pseudo Proxy.
           <br />You will either double the DON tokens in your wallet, or you will lose all of them!
           <br />Only a true DON will ever be brave enough to call this function!</p>
-        
-        <button onClick={connectWallet}>Connect Wallet</button>
         
         <p className='mt-20'>DON Token Staking</p>
         <p>Earn 0.01% interest for every hour staked (0.24% interest per day | 1.68% interest per week | 87.6% per year)</p>
