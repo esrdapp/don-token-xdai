@@ -33,7 +33,9 @@ class App extends React.Component {
     showModal: false
   };
 
-  this.connectWallet = this.connectWallet.bind(this);
+      // Bind the connectWallet function to the current instance
+    this.connectWallet = this.connectWallet.bind(this);
+  }
 
   showData() {
     myContract.methods.balanceOf(this.state.account).call().then(wei => {
