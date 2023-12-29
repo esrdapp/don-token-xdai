@@ -74,24 +74,44 @@ class App extends React.Component {
   //   });
   // }
 
+  // async connectWallet() {
+  //   try {
+  //     const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+  //     const netId = await web3.eth.net.getId();
+  //     if (netId === 369) {
+  //       this.setState({ account: accounts[0] });
+  //       this.showData();
+  //     } else {
+  //       await window.ethereum.request({
+  //         method: 'wallet_switchEthereumChain',
+  //         params: [{ chainId: '0x171' }]
+  //       });
+  //       this.showData();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error connecting wallet:", error);
+  //   }
+  // }
+
   async connectWallet() {
-    try {
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-      const netId = await web3.eth.net.getId();
-      if (netId === 369) {
-        this.setState({ account: accounts[0] });
-        this.showData();
-      } else {
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x171' }]
-        });
-        this.showData();
-      }
-    } catch (error) {
-      console.error("Error connecting wallet:", error);
+  try {
+    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+    const netId = await web3.eth.net.getId();
+    if (netId === 369) {
+      this.setState({ account: accounts[0] }, () => {
+        this.showData(); // This is called after the state is updated
+      });
+    } else {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x171' }]
+      });
+      this.showData();
     }
+  } catch (error) {
+    console.error("Error connecting wallet:", error);
   }
+}
 
   onSubmitBalanceOf = async (event) => {
     event.preventDefault();
