@@ -3,6 +3,8 @@ import web3 from './web3';
 import myContract from './myContract';
 import ReactModal from 'react-modal';
 import Iframe from 'react-iframe';
+import logo from './logo.png'; // Import the logo image
+import call from './call.png'; // Import the call image
 
 const delay = t => new Promise(s => setTimeout(s, t * 1000));
 
